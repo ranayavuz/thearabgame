@@ -3,12 +3,8 @@ var health = 100;
 var food = 100;
 var thirst = 100;
 
-function out(text, log) {
+function out(text) {
     document.write(text);  // Shows a pop-up instead of document.write()
-    if log === undefined {
-      log = "nolog";
-    }
-    console.log(log);  // Logs to console for debugging
 }
 
 function die() {
