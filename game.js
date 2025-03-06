@@ -3,8 +3,11 @@ var health = 100;
 var food = 100;
 var thirst = 100;
 
-function out(text) {
-    document.write(text);  // Shows a pop-up instead of document.write()
+
+function out(text, callback) {
+    document.write(text);  // Show text as an alert
+    console.log(text);  // Debugging in console
+    if (callback) callback();  // Move to the next function
 }
 
 function die() {
