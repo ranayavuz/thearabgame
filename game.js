@@ -20,7 +20,6 @@ function statcheck() {
 
 out("your name is omar, you are in the village, you want to meet your dad. What do you do? there is this trader selling caravans 1. buy a caravan  2. dont buy 3. punch the trader")
 function choice() {
-    
     ans = prompt("your choice", "")
 }
 choice()
@@ -44,31 +43,32 @@ if ans == "1" {
         if ans == "2" {
             print("there is a worm in the sand \n 1. eat it \n 2. keep it as a pet \n 3. run")
             choice()
-            if ans == "1":
+            if ans == "1" {
                 print("you ate it and feel a tummy ache")
                 food -= 20
                 statcheck()
                 print("THERE IS A MAN WITH A ROCK AND TURNS OUT IT WAS HIS WORM!!! you get beaten up")
                 # Dictionary containing questions and their correct answers
-                quiz = {
-                    "What does شكرًا mean": "thank you",
-                    "What is ٢ + ٢?": "4",
-                    "what number is ٤": "4",
-                    "what does أكُل mean": "i eat",
-                    "what sound is ب": "ba"
+                quiz =  constructor() {
+                    q1ans: "thank you",
+                    q2ans: "4",
+                    q3ans: "4",
+                    q4ans: "i eat",
+                    q5ans: "ba"
                 }
 
-                score = 0  # To keep track of the score
+                var score = 0  // To keep track of the score
 
                 # Loop through the dictionary
-                for question, correct_answer in quiz.items():
-                    answer = input(question + " ")  # Ask the user for input
-                    if answer.strip().lower() == correct_answer.lower():  # Check if the answer is correct
+                for question, correct_answer in quiz.items() {
+                    answer = prompt("this is under construction!", "")  // Ask the user for input
+                    if answer.strip().lower() == correct_answer.lower():  // Check if the answer is correct
                         print("Correct!")
                         score += 1
-                    else:
-                        print("Wrong! The correct answer is:", correct_answer)
-
+                    else {
+                        out("Wrong! The correct answer is:", correct_answer)
+                    }
+                }
                 print(f"\nYou got {score} out of {len(quiz)} questions right")
 
                 if score <= 3:
@@ -89,15 +89,19 @@ if ans == "1" {
             
 
 //choice 2
-if ans == "2":
-    print("you go home, and do boring things, the end")
+if ans == "2" {
+    out("you go home, and do boring things, the end")
+}
 
 //choice 3
-if ans == "3":
-    print("TURNS OUT THE TRADER HAD A SWORD!!! \n 1. run \n 2. fight")
+if ans == "3" {
+    out("TURNS OUT THE TRADER HAD A SWORD!!! \n 1. run \n 2. fight")
     choice()
-    if ans == "1":
-        print("you ran, but you are wanted")
-    if ans == "2":
-        print("you fight, and lost")
+    if ans == "1" {
+        out("you ran, but you are wanted")
+    }
+    if ans == "2" {
+        out("you fight, and lost")
         die()
+    }
+}
