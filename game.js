@@ -49,7 +49,7 @@ if ans == "1" {
                 statcheck()
                 print("THERE IS A MAN WITH A ROCK AND TURNS OUT IT WAS HIS WORM!!! you get beaten up")
                 # Dictionary containing questions and their correct answers
-                quiz =  constructor() {
+                const quiz = constructor() {
                     q1ans: "thank you",
                     q2ans: "4",
                     q3ans: "4",
