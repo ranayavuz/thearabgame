@@ -19,9 +19,10 @@ function statcheck() {
 }
 
 out("your name is omar, you are in the village, you want to meet your dad. What do you do? there is this trader selling caravans 1. buy a caravan  2. dont buy 3. punch the trader")
-def choice():
+function choice() {
     
     ans = prompt("your choice", "")
+}
 choice()
 
 if ans == "1" {
