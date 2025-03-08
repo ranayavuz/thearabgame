@@ -5,3 +5,9 @@ this is a manual for running game.py, lets get started
 2. open terminal and type this command:
 
 pip3 install colorama
+
+3. keep the terminal open type this with a space at the end
+
+python3
+
+4. but dont run it yet, drag your downloaded file to the terminal and then run it (press enter)
