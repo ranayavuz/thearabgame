@@ -1,1 +1,7 @@
-this is a manual for running game.py,
+this is a manual for running game.py, lets get started
+
+1. install python (3.10+) using self service or the website
+
+2. open terminal and type this command:
+
+pip3 install colorama
