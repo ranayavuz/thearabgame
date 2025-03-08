@@ -1,0 +1,1 @@
+this is a manual for running game.py,
