@@ -54,11 +54,11 @@ out("Your name is Omar. You are in the village, wanting to meet your dad. What d
 
                                                 out("A man appears, furious that you ate his pet worm!", function () {
                                                     const quiz = {
-                                                        q1: ["What should you say to calm him down?", "thank you"],
-                                                        q2: ["How many legs does a camel have?", "4"],
-                                                        q3: ["How many humps does a dromedary camel have?", "1"],
-                                                        q4: ["What do you do when hungry?", "i eat"],
-                                                        q5: ["What is the sound a sheep makes?", "ba"]
+                                                        q1: ["what does شكرًا لك mean", "thank you"],
+                                                        q2: ["what is ٢ + ٢", "4"],
+                                                        q3: ["what is wahad in english", "1"],
+                                                        q4: ["what does أنا آكل mean", "i eat"],
+                                                        q5: ["What is ب pronounced", "ba"]
                                                     };
 
                                                     var score = 0;
