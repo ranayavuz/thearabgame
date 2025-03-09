@@ -4,9 +4,9 @@ var food = 100;
 var thirst = 100;
 
 function out(text, callback) {
-    alert(text);  // Show text as an alert
-    console.log(text);  // Debugging in console
-    if (callback) callback();  // Move to the next function
+    alert(text);  
+    console.log(text);
+    if (callback) callback();  
 }
 
 function die() {
@@ -62,9 +62,11 @@ out("Your name is Omar. You are in the village, wanting to meet your dad. What d
                                                     };
 
                                                     var score = 0;
-                                                    function askQuizQuestion(questions, index) {
-                                                        if (index >= questions.length) {
-                                                            out(`You got ${score} out of ${questions.length} correct.`, function () {
+                                                    const quizEntries = Object.entries(quiz);
+
+                                                    function askQuizQuestion(index) {
+                                                        if (index >= quizEntries.length) {
+                                                            out(`You got ${score} out of ${quizEntries.length} correct.`, function () {
                                                                 if (score <= 3) {
                                                                     die();
                                                                 } else {
@@ -76,5 +78,55 @@ out("Your name is Omar. You are in the village, wanting to meet your dad. What d
                                                             return;
                                                         }
 
-                                                        const question = questions[index][1][0];  
-                                                       
+                                                        const question = quizEntries[index][1][0];  
+                                                        const correctAnswer = quizEntries[index][1][1];
+
+                                                        choice(question, function (answer) {
+                                                            if (answer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+                                                                out("Correct!", function () {
+                                                                    score++;
+                                                                    askQuizQuestion(index + 1);
+                                                                });
+                                                            } else {
+                                                                out(`Wrong! The correct answer was: ${correctAnswer}`, function () {
+                                                                    askQuizQuestion(index + 1);
+                                                                });
+                                                            }
+                                                        });
+                                                    }
+
+                                                    askQuizQuestion(0);
+                                                });
+                                            }
+                                        });
+                                    });
+                                }
+
+                                out("You see a mountain ahead.\n1. Go for it\n2. Go backward", function () {
+                                    choice("Your choice:", function (ans) {
+                                        if (ans === "1") {
+                                            out("You remember legends about these mountains… They say dangerous spirits lurk there, but also an ancient city with a treasure trove of gold.");
+                                        }
+                                    });
+                                });
+                            });
+                        });
+                    }
+                });
+            });
+        } else if (ans === "2") {
+            out("You go home and do boring things. The end.");
+        } else if (ans === "3") {
+            out("TURNS OUT THE TRADER HAD A SWORD!!!\n1. Run\n2. Fight", function () {
+                choice("Your choice:", function (ans) {
+                    if (ans === "1") {
+                        out("You ran, but now you're wanted!");
+                    } else if (ans === "2") {
+                        out("You fight, and lose.");
+                        die();
+                    }
+                });
+            });
+        }
+    });
+});
