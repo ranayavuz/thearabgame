@@ -1,3 +1,4 @@
+try {
 var read_map = false;
 var health = 100;
 var food = 100;
@@ -130,3 +131,7 @@ out("Your name is Omar. You are in the village, wanting to meet your dad. What d
         }
     });
 });
+}
+catch(err) {
+    console.log("nooooo")
+}
