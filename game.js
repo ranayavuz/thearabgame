@@ -134,4 +134,5 @@ out("Your name is Omar. You are in the village, wanting to meet your dad. What d
 }
 catch(err) {
     console.log("nooooo")
+    console.log(err.message)
 }
