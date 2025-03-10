@@ -1,4 +1,5 @@
 try {
+    hi
 var read_map = false;
 var health = 100;
 var food = 100;
