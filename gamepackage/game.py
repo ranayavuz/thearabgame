@@ -29,7 +29,7 @@ class enemy:
         self.name = name
         self.behavior = behavior
         self.type = type
-        self.ehealth = None
+        self.ehealth = random.randint(30, 50)
         match config.mode:
             case "baby":
                 self.ehealth += random.randint(30, 50)
@@ -51,8 +51,7 @@ class enemy:
                     print("huh?")
         
     def active(self):
-        if self.type == "rattleSnake":
-            self.ehealth = random.randint(50, 70)
+        pass
             
 def statcheck():
     if thirst < 1 or food < 1 or health < 1:
