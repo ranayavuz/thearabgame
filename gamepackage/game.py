@@ -24,7 +24,7 @@ slow_print(Fore.YELLOW + "importing...")
 import config
 import random
 slow_print("done")
-if config.terminal_black = False:
+if config.terminal_black == False:
     print(Fore.BLACK)
 else:
     print(Fore.WHITE)
