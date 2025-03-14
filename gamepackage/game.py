@@ -30,7 +30,7 @@ class enemy:
         self.behavior = behavior
         self.type = type
         self.ehealth = random.randint(30, 50)
-        match config.mode:
+        match config.mode.lower().strip():
             case "baby":
                 self.ehealth += random.randint(30, 50)
             case "easy":
