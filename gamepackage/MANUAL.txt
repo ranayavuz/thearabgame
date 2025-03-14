@@ -11,3 +11,23 @@ pip3 install colorama
 python3
 
 4. but dont run it yet, drag your downloaded file to the terminal and then run it (press enter)
+
+#configuration
+
+make sure to open config.py, and NEVER CHANGE THE VARIABLE NAMES!!!
+
+black_terminal is just something where you can specify if your terminal's background is black or not, simply put in True or False
+
+mode is just to set the game's difficulty. these are all values:
+
+"baby"
+
+"easy"
+
+"normal"
+
+"hard"
+
+"dragon"
+
+more config coming soon!
