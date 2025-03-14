@@ -42,7 +42,7 @@ class enemy:
             case _:
                 print(f"warning, i dont recognize this maddness ({config.mode}), so i am assuming its normal mode.")
                 slow_print("terminate the program...?", 0.1)
-                ans = input("").lower()
+                ans = input("").lower().strip()
                 if ans == "yes":
                     raise SystemExit("program terminated due to errors in config.py: mode")
                 elif ans == "no":
