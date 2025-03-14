@@ -1,13 +1,4 @@
 
-class enemy:
-    def __init__(self, name, behavior, type):
-        self.name = name
-        self.behavior = behavior
-        self.type = type
-        self.ehealth = None
-    def active(self):
-        if self.type == "rattleSnake":
-            self.ehealth = random.randint(50, 70)
 
 
 import time
@@ -24,6 +15,7 @@ slow_print(Fore.YELLOW + "importing...")
 import config
 import random
 slow_print("done")
+
 if config.terminal_black == False:
     print(Fore.BLACK)
 else:
@@ -32,6 +24,36 @@ def die():
     print("\n you died, the end of your journey \n")
     quit()
 
+class enemy:
+    def __init__(self, name, behavior, type):
+        self.name = name
+        self.behavior = behavior
+        self.type = type
+        self.ehealth = None
+        match config.mode:
+            case "baby":
+                self.ehealth += random.randint(30, 50)
+            case "easy":
+                self.ehealth += random.randint(10, 30)
+            case "hard":
+                self.ehealth += random.randint(20, 40)
+            case "dragon":
+                self.ehealth += random.randint(80, 100)
+            case _:
+                print(f"warning, i dont recognize this maddness ({config.mode}), so i am assuming its normal mode.")
+                slow_print("terminate the program...?", 0.1)
+                ans = input("").lower()
+                if ans == "yes":
+                    raise SyntaxError
+                elif ans == "no":
+                    pass
+                else:
+                    print("huh?")
+        
+    def active(self):
+        if self.type == "rattleSnake":
+            self.ehealth = random.randint(50, 70)
+            
 def statcheck():
     if thirst < 1 or food < 1 or health < 1:
         die()
