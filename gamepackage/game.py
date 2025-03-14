@@ -44,7 +44,7 @@ class enemy:
                 slow_print("terminate the program...?", 0.1)
                 ans = input("").lower()
                 if ans == "yes":
-                    raise SyntaxError
+                    raise SystemExit("program terminated due to errors in config.py: mode")
                 elif ans == "no":
                     pass
                 else:
