@@ -18,11 +18,16 @@ def slow_print(text, delay=0.05):
         print(char, end='', flush=True)
         time.sleep(delay)
     print()
+
 from colorama import Fore
 slow_print(Fore.YELLOW + "importing...")
+import config
 import random
-slow_print("done \n")
-
+slow_print("done")
+if config.terminal_black = False:
+    print(Fore.BLACK)
+else:
+    print(Fore.WHITE)
 def die():
     print("\n you died, the end of your journey \n")
     quit()
@@ -34,7 +39,7 @@ def statcheck():
     slow_print(f"your water level: {thirst}")
     slow_print(f"your hunger level: {food}")
 
-print(Fore.BLACK + "your name is omar, you are in the village, you want to meet your dad. What do you do? there is this trader selling caravans \n 1. buy a caravan \n 2. dont buy \n 3. punch the trader")
+print("your name is omar, you are in the village, you want to meet your dad. What do you do? there is this trader selling caravans \n 1. buy a caravan \n 2. dont buy \n 3. punch the trader")
 def choice():
     global ans
     ans = input("your choice ")
