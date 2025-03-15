@@ -134,6 +134,20 @@ out("Your name is Omar. You are in the village, wanting to meet your dad. What d
 });
 }
 catch(err) {
-    console.log("nooooo")
+    var funnymessage = Math.floor(Math.random() * 4) + 1;
+    switch(funnymessage) {
+  case 1:
+    console.log("a pat on the back?")
+    break;
+  case 2:
+    console.log(":(")
+    break;
+case 3:
+            console.log("what happened, js? >:(")
+        case 4:
+            console.log("blame chatgpt!")
+  default:
+    console.log("uh, what is happening?");
+}
     console.log(err.message)
 }
