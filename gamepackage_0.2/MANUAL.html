@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Manual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2 {
+            color: #444;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .note {
+            font-style: italic;
+            color: #555;
+        }
+        #copyright {
+            size: 0.5;
+            color: #8d8d8d;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Manual</h1>
+    <p>Welcome to the manual for running <code>game.py</code>. Follow these steps to get started:</p>
+
+    <h2>Installation</h2>
+    <ol>
+        <li>Install Python (version 3.10 or higher) using Self Service or from the <a href="https://www.python.org/downloads/" target="_blank">official website</a>.</li>
+        <li>Open your terminal and run the following command to install the required dependency:
+            <pre><code>pip3 install colorama</code></pre>
+        </li>
+    </ol>
+
+    <h2>Running the Game</h2>
+    <ol>
+        <li>Keep the terminal open and type the following command, leaving a space at the end:
+            <pre><code>python3 </code></pre>
+        </li>
+        <li>Drag your downloaded file into the terminal and press <strong>Enter</strong> to run it.</li>
+    </ol>
+    <p class="note">Note: Ignore the <code>__pycache__</code> folder. It contains Python's binary files used for importing configurations.</p>
+
+    <h2>Configuration</h2>
+    <p>Before running the game, make sure to configure the <code>config.py</code> file. <strong>Do not change the variable names!</strong></p>
+    <ul>
+        <li><code>black_terminal</code>: Set this to <code>True</code> if your terminal's background is black, otherwise set it to <code>False</code>.</li>
+        <li><code>mode</code>: Set the game's difficulty. Available options are:
+            <ul>
+                <li><code>"baby"</code></li>
+                <li><code>"easy"</code></li>
+                <li><code>"normal"</code></li>
+                <li><code>"hard"</code></li>
+                <li><code>"dragon"</code></li>
+            </ul>
+        </li>
+    </ul>
+    <p class="note">More configuration options will be added in future updates!</p>
+    <p id="copyright">this is my property!</p>
+</body>
+</html>
+<!--Thanks! Github Copilot!-->
