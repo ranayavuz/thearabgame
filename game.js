@@ -1,136 +1,239 @@
 try {
-var read_map = false;
-var health = 100;
-var food = 100;
-var thirst = 100;
+const config = {
+    terminal_black: true,
+    mode: "normal",
+    debug: true,
+    hasmods: false
+};
 
-function out(text, callback) {
-    alert(text);  
-    console.log(text);
-    if (callback) callback();  
-}
+// Debug API
+const debugapi = {
+    log: (thing) => {
+        if (config.debug) {
+            console.log(`[DEBUG]: ${thing}`);
+        }
+    },
+    err: (thing) => {
+        if (config.debug) {
+            console.error(`[DEBUG]: NOT_FATAL_ERROR ${thing}`);
+        }
+    }
+};
 
-function die() {
-    out("You died, the end of your journey.", function () {
-        window.location.href = "https://ranayavuz.github.io/thearabgame/index.html";
+// Game variables
+let jsonobj = {
+    inventory: [],
+    location: "",
+    health: 100,
+    food: 100,
+    thirst: 100
+};
+let file = "";
+let health = 100;
+let food = 100;
+let thirst = 100;
+let saveon = true;
+let savesfolder = [];
+
+// Helper functions
+const slowPrint = (text, delay = 50) => {
+    [...text].forEach((char, index) => {
+        setTimeout(() => {
+            document.body.innerHTML += char; // Append text to the webpage
+        }, index * delay);
     });
-}
+};
 
-function statcheck() {
-    if (thirst < 1 || food < 1 || health < 1) {
+const ensureFileInitialized = () => {
+    if (!file) {
+        file = "default_save";
+        debugapi.log(`Ensuring file is initialized: ${file}`);
+        if (!localStorage.getItem(file)) {
+            localStorage.setItem(file, JSON.stringify(jsonobj));
+            debugapi.log(`Default save file created: ${file}`);
+        }
+    }
+};
+
+const save = (thing, tosave) => {
+    ensureFileInitialized();
+    if (saveon) {
+        jsonobj[thing] = tosave;
+        jsonobj.health = health;
+        jsonobj.food = food;
+        jsonobj.thirst = thirst;
+        debugapi.log(`Saving ${thing} to ${file}`);
+        localStorage.setItem(file, JSON.stringify(jsonobj));
+    }
+};
+
+const die = () => {
+    slowPrint("\n you died, the end of your journey \n");
+    if (config.mode === "dragon") {
+        slowPrint("since you are playing on dragon mode, A SAVE WILL BE DELETED MUHAHAHHAAHAHHA");
+        alert("choose a save to delete");
+        savesfolder.forEach((save, index) => console.log(`${index + 1}. ${save}`));
+        const ans = prompt("Your choice:");
+        try {
+            const saveToDelete = savesfolder[parseInt(ans) - 1];
+            localStorage.removeItem(saveToDelete);
+            debugapi.log(`Deleted save: ${saveToDelete}`);
+            alert("Save deleted successfully.");
+        } catch (e) {
+            alert("Invalid selection or error deleting save.");
+            debugapi.err(`Error deleting save: ${e}`);
+        }
+    } else {
+        alert("Game Over!");
+    }
+};
+
+// Game logic
+const start = () => {
+    const ans = prompt("your name is omar, you are in the village, you want to meet your dad. What do you do? there is this trader selling caravans \n 1. buy a caravan \n 2. dont buy \n 3. punch the trader");
+    if (ans === "1") {
+        caravanthing();
+    } else if (ans === "2") {
+        alert("you go home, and do boring things, the end");
+    } else if (ans === "3") {
+        const ans2 = prompt("TURNS OUT THE TRADER HAD A SWORD!!! \n 1. run \n 2. fight");
+        if (ans2 === "1") {
+            alert("you ran, but you are wanted");
+        } else if (ans2 === "2") {
+            alert("you fight, and lost");
+            die();
+        }
+    } else {
+        alert("Invalid choice.");
+    }
+};
+
+const caravanthing = () => {
+    ensureFileInitialized();
+    debugapi.log(`Current save file: ${file}`);
+    save("location", "caravanthing");
+    const ans = prompt("you buy a caravan, what do you do? \n 1. ride around the village \n 2. go out to the desert");
+    if (ans === "1") {
+        alert("you squished someone and you are in jail now");
+    } else if (ans === "2") {
+        desert();
+    } else {
+        alert("Invalid choice.");
+    }
+};
+
+const desert = () => {
+    ensureFileInitialized();
+    debugapi.log(`Current save file: ${file}`);
+    save("location", "desert");
+    save("inventory", ["small water pouch", "dagger", "foreign map"]);
+    const ans = prompt("you went out into the desert, but your caravan broke, now you are stranded with only a small water pouch, a dagger, and an old map with some sus markings \n 1. go left \n 2. go right \n 3. forward \n 4. read the map");
+    if (ans === "4") {
+        alert("the map is of an unfamiliar place, and it has weird symbols, but it has smth that catches your eyes. The oasis of light");
+    } else if (ans === "2") {
+        worm();
+    } else {
+        alert("Invalid choice.");
+    }
+};
+
+const worm = () => {
+    ensureFileInitialized();
+    debugapi.log(`Current save file: ${file}`);
+    save("location", "worm");
+    const ans = prompt("there is a worm in the sand \n 1. eat it \n 2. keep it as a pet \n 3. run");
+    if (ans === "1") {
+        alert("you ate it and feel a tummy ache");
+        food -= 20;
+        statcheck();
+        alert("THERE IS A MAN WITH A ROCK AND TURNS OUT IT WAS HIS WORM!!! you get beaten up");
+        quiz();
+    } else {
+        alert("Invalid choice.");
+    }
+};
+
+const quiz = () => {
+    const questions = {
+        "What does شكرًا mean": "thank you",
+        "What is ٢ + ٢?": "4",
+        "what number is ٤": "4",
+        "what does أكُل mean": "i eat",
+        "what sound is ب": "ba"
+    };
+    let score = 0;
+    const keys = Object.keys(questions);
+
+    keys.forEach((question) => {
+        const answer = prompt(`${question}`);
+        if (answer.trim().toLowerCase() === questions[question].toLowerCase()) {
+            alert("Correct!");
+            score++;
+        } else {
+            alert(`Wrong! The correct answer is: ${questions[question]}`);
+        }
+    });
+
+    alert(`\nYou got ${score} out of ${keys.length} questions right`);
+    if (score <= 3) {
         die();
     } else {
-        out(`Your health: ${health}\nYour water level: ${thirst}\nYour hunger level: ${food}`);
+        health -= 60;
+        survivemount();
+    }
+};
+
+const statcheck = () => {
+    if (thirst < 1 || food < 1 || health < 1) {
+        die();
+    }
+    slowPrint(`your health: ${health}`);
+    slowPrint(`your water level: ${thirst}`);
+    slowPrint(`your hunger level: ${food}`);
+};
+
+// Initialize game
+try {
+    savesfolder = Object.keys(localStorage);
+} catch (e) {
+    debugapi.err(`Error accessing localStorage: ${e}`);
+}
+
+const ans = prompt("choose a save. Type NEW to make a new one. Type DELETE to delete a save");
+if (ans.trim().toUpperCase() === "DELETE") {
+    const saveToDelete = prompt("choose a save to delete");
+    try {
+        localStorage.removeItem(saveToDelete);
+        debugapi.log(`Deleted save: ${saveToDelete}`);
+    } catch (e) {
+        alert("Invalid selection or error deleting save.");
+        debugapi.err(`Error deleting save: ${e}`);
+        saveon = false;
+    }
+} else if (ans.trim().toUpperCase() === "NEW") {
+    const name = prompt("Name?");
+    file = name;
+    localStorage.setItem(file, JSON.stringify(jsonobj));
+    debugapi.log(`New save created: ${file}`);
+    start();
+} else {
+    try {
+        file = ans;
+        const fileContent = JSON.parse(localStorage.getItem(file));
+        health = fileContent.health;
+        food = fileContent.food;
+        thirst = fileContent.thirst;
+        debugapi.log(`Loaded save: ${file}`);
+        start();
+    } catch (e) {
+        debugapi.err(`Error loading save: ${e}`);
+        saveon = false;
+        ensureFileInitialized();
+        start();
     }
 }
 
-function choice(options, callback) {
-    var ans = prompt(options);
-    if (callback) callback(ans);
-}
 
-// Start the game
-out("Your name is Omar. You are in the village, wanting to meet your dad. What do you do? There is a trader selling caravans.\n1. Buy a caravan\n2. Don't buy\n3. Punch the trader", function () {
-    choice("Your choice:", function (ans) {
-        if (ans === "1") {
-            out("You buy a caravan. What do you do next?\n1. Ride around the village\n2. Go out to the desert", function () {
-                choice("Your choice:", function (ans) {
-                    if (ans === "1") {
-                        out("You squished someone and are now in jail.");
-                    } else if (ans === "2") {
-                        out("You went out into the desert, but your caravan broke down. You are stranded with only a small water pouch, a dagger, and an old map.\n1. Go left\n2. Go right\n3. Move forward\n4. Read the map", function () {
-                            choice("Your choice:", function (ans) {
-                                if (ans === "4") {
-                                    out("The map is of an unfamiliar place, and it has weird symbols. One marking stands out: 'The Oasis of Light'.");
-                                    read_map = true;
-                                }
-
-                                if (ans === "2") {
-                                    out("There is a worm in the sand.\n1. Eat it\n2. Keep it as a pet\n3. Run", function () {
-                                        choice("Your choice:", function (ans) {
-                                            if (ans === "1") {
-                                                out("You ate it and feel a stomach ache.");
-                                                food -= 20;
-                                                statcheck();
-
-                                                out("A man appears, furious that you ate his pet worm!", function () {
-                                                    const quiz = {
-                                                        q1: ["what does شكرًا لك mean", "thank you"],
-                                                        q2: ["what is ٢ + ٢", "4"],
-                                                        q3: ["what is wahad in english", "1"],
-                                                        q4: ["what does أنا آكل mean", "i eat"],
-                                                        q5: ["What is ب pronounced", "ba"]
-                                                    };
-
-                                                    var score = 0;
-                                                    const quizEntries = Object.entries(quiz);
-
-                                                    function askQuizQuestion(index) {
-                                                        if (index >= quizEntries.length) {
-                                                            out(`You got ${score} out of ${quizEntries.length} correct.`, function () {
-                                                                if (score <= 3) {
-                                                                    die();
-                                                                } else {
-                                                                    out("You survived, but with bad injuries.");
-                                                                    health -= 60;
-                                                                    statcheck();
-                                                                }
-                                                            });
-                                                            return;
-                                                        }
-
-                                                        const question = quizEntries[index][1][0];  
-                                                        const correctAnswer = quizEntries[index][1][1];
-
-                                                        choice(question, function (answer) {
-                                                            if (answer.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-                                                                out("Correct!", function () {
-                                                                    score++;
-                                                                    askQuizQuestion(index + 1);
-                                                                });
-                                                            } else {
-                                                                out(`Wrong! The correct answer was: ${correctAnswer}`, function () {
-                                                                    askQuizQuestion(index + 1);
-                                                                });
-                                                            }
-                                                        });
-                                                    }
-
-                                                    askQuizQuestion(0);
-                                                });
-                                            }
-                                        });
-                                    });
-                                }
-
-                                out("You see a mountain ahead.\n1. Go for it\n2. Go backward", function () {
-                                    choice("Your choice:", function (ans) {
-                                        if (ans === "1") {
-                                            out("You remember legends about these mountains… They say dangerous spirits lurk there, but also an ancient city with a treasure trove of gold.");
-                                        }
-                                    });
-                                });
-                            });
-                        });
-                    }
-                });
-            });
-        } else if (ans === "2") {
-            out("You go home and do boring things. The end.");
-        } else if (ans === "3") {
-            out("TURNS OUT THE TRADER HAD A SWORD!!!\n1. Run\n2. Fight", function () {
-                choice("Your choice:", function (ans) {
-                    if (ans === "1") {
-                        out("You ran, but now you're wanted!");
-                    } else if (ans === "2") {
-                        out("You fight, and lose.");
-                        die();
-                    }
-                });
-            });
-        }
-    });
-});
 }
 catch(err) {
     var funnymessage = Math.floor(Math.random() * 4) + 1;
